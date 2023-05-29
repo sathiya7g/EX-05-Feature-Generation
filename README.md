@@ -1,14 +1,18 @@
 # EX-05-Feature-Generation
 
 
+NAME Sathiya Narayanan G
+REGISTER NO 212221220049
+
+
 ## AIM
 To read the given data and perform Feature Generation process and save the data to a file. 
 
-## Explanation
+# Explanation
 Feature Generation (also known as feature construction, feature extraction or feature engineering) is the process of transforming features into new features that better relate to the target.
  
 
-## ALGORITHM
+# ALGORITHM
 ### STEP 1
 Read the given Data
 ### STEP 2
@@ -18,221 +22,234 @@ Apply Feature Generation techniques to all the feature of the data set
 ### STEP 4
 Save the data to the file
 
-## CODE
-```
-Program Developed: Sathiya Narayanan G
-Register number:2122221220049
-```
-### Data.csv:
+# 1.FEATURE GENERATION FOR Data.csv
+## CODE FOR FEATURE ENCODING AND FEATURE SCALING:
 ```
 import pandas as pd
 df=pd.read_csv("data.csv")
 df
-
-#feature generation
-import category_encoders as ce
-be=ce.BinaryEncoder()
-ndf=be.fit_transform(df["bin_1"])
-df["bin_1"] = be.fit_transform(df["bin_1"])
-ndf
-
-ndf2=be.fit_transform(df["bin_2"])
-df["bin_2"] = be.fit_transform(df["bin_2"])
-ndf2
-
-df1=df.copy()
-from sklearn.preprocessing import LabelEncoder,OrdinalEncoder,OneHotEncoder
-import category_encoders as ce
-be=ce.BinaryEncoder()
+from sklearn.preprocessing import LabelEncoder,OrdinalEncoder
+temp=["Cold","Warm","Hot","Very Hot"]
+enc=OrdinalEncoder(categories=[temp])
+df["Ord_1"]=enc.fit_transform(df[["Ord_1"]])
+df
+education=["High School","Diploma","Bachelors","Masters","PhD"]
+ed=OrdinalEncoder(categories=[education])
+df["Ord_2"]=ed.fit_transform(df[["Ord_2"]])
+df
+pip install category_encoders
+from category_encoders import BinaryEncoder
+be=BinaryEncoder()
+be.fit_transform(df["bin_1"])
+df["bin_1"]=be.fit_transform(df[["bin_1"]])
+df
+be1=BinaryEncoder()
+be1.fit_transform(df["bin_2"])
+df["bin_2"]=be1.fit_transform(df[["bin_2"]])
+df
+from sklearn.preprocessing import OneHotEncoder
 ohe=OneHotEncoder(sparse=False)
+ohe.fit_transform(df[["City"]])
+from category_encoders import TargetEncoder
+te=TargetEncoder()
+te.fit_transform(X=df['Ord_1'],y=df["Target"])
 le=LabelEncoder()
-oe=OrdinalEncoder()
-
-
-df1["City"] = ohe.fit_transform(df1[["City"]])
-
-temp=['Cold','Warm','Hot','Very Hot']
-oe1=OrdinalEncoder(categories=[temp])
-df1['Ord_1'] = oe1.fit_transform(df1[["Ord_1"]])
-
-edu=['High School','Diploma','Bachelors','Masters','PhD']
-oe2=OrdinalEncoder(categories=[edu])
-df1['Ord_2']= oe2.fit_transform(df1[["Ord_2"]])
-df1
-
-#feature scaling
-from sklearn.preprocessing import MinMaxScaler
-sc=MinMaxScaler()
-df2=pd.DataFrame(sc.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df2
-
-from sklearn.preprocessing import StandardScaler
-sc1=StandardScaler()
-df3=pd.DataFrame(sc1.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df3
-
-from sklearn.preprocessing import MaxAbsScaler
-sc2=MaxAbsScaler()
-df4=pd.DataFrame(sc2.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df4
-
-from sklearn.preprocessing import RobustScaler
-sc3=RobustScaler()
-df5=pd.DataFrame(sc3.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df5
-```
-### Data.csv output:
-![ds1](https://user-images.githubusercontent.com/93427345/195565371-5b0f62a0-9d59-443a-b18a-1aebab1d594f.png)
-
-![ds2](https://user-images.githubusercontent.com/93427345/195565421-0b68b926-5cc5-425e-919e-65867f44baf4.png)
-
-![ds3](https://user-images.githubusercontent.com/93427345/195565451-ae75ff4c-4d91-4433-8723-3b31c53a75bf.png)
-
-![ds4](https://user-images.githubusercontent.com/93427345/195565496-f356d55e-5c5d-46eb-b5d0-643dd645289b.png)
-
-![ds5](https://user-images.githubusercontent.com/93427345/195565555-827b3c2d-7358-4568-b913-009162e90104.png)
-
-![ds6](https://user-images.githubusercontent.com/93427345/195565577-66f19e9d-1772-438f-9f38-4da924153a01.png)
-
-![ds7](https://user-images.githubusercontent.com/93427345/195565612-5e5d7c66-8bc8-4e61-8d48-63dbe1fad175.png)
-
-### Encoding.csv code:
-```
-import pandas as pd
-df=pd.read_csv("Encoding Data.csv")
+df["City"]=le.fit_transform(df[["City"]])
 df
 
-#feature generation
-import category_encoders as ce
-be=ce.BinaryEncoder()
-ndf=be.fit_transform(df["bin_1"])
-df["bin_1"] = be.fit_transform(df["bin_1"])
-ndf
-
-ndf2=be.fit_transform(df["bin_2"])
-df["bin_2"] = be.fit_transform(df["bin_2"])
-ndf2
-
-df1=df.copy()
-from sklearn.preprocessing import LabelEncoder,OrdinalEncoder
-le=LabelEncoder()
-oe=OrdinalEncoder()
-
-df1["nom_0"] = oe.fit_transform(df1[["nom_0"]])
-temp=['Cold','Warm','Hot']
-oe2=OrdinalEncoder(categories=[temp])
-df1['ord_2'] = oe2.fit_transform(df1[['ord_2']])
-
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+df1=pd.DataFrame(sc.fit_transform(df),columns=['id','bin_1','bin_2','City','Ord_1','Ord_2','Target'])
 df1
 
-#feature scaling
-from sklearn.preprocessing import MinMaxScaler
-sc=MinMaxScaler()
-df0=pd.DataFrame(sc.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
-df0
-
-from sklearn.preprocessing import StandardScaler
-sc1=StandardScaler()
-df2=pd.DataFrame(sc1.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
+from sklearn.preprocessing import MaxAbsScaler
+mas=MaxAbsScaler()
+df2=pd.DataFrame(mas.fit_transform(df),columns=['id','bin_1','bin_2','City','Ord_1','Ord_2','Target'])
 df2
 
-from sklearn.preprocessing import MaxAbsScaler
-sc2=MaxAbsScaler()
-df3=pd.DataFrame(sc2.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
+from sklearn.preprocessing import MinMaxScaler
+mms=MinMaxScaler()
+df3=pd.DataFrame(mms.fit_transform(df),columns=['id','bin_1','bin_2','City','Ord_1','Ord_2','Target'])
 df3
 
 from sklearn.preprocessing import RobustScaler
-sc3=RobustScaler()
-df4=pd.DataFrame(sc3.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
+rs=RobustScaler()
+df4=pd.DataFrame(rs.fit_transform(df),columns=['id','bin_1','bin_2','City','Ord_1','Ord_2','Target'])
 df4
 ```
-### Encoding.csv Output:
-![1](https://user-images.githubusercontent.com/93427345/195566163-146b54ce-a766-4899-9de7-7932f5a59dff.png)
+# OUTPUT
+### Given DataFrame
+![1 give](https://user-images.githubusercontent.com/93992063/166719292-a8424793-bd26-4f55-8abe-8cf44aa14f80.png)
 
-![2](https://user-images.githubusercontent.com/93427345/195566234-2e905f05-7c18-4f12-8aad-7e9f0db8ff56.png)
+## Feature encoding using Ordinal Encoder
+![1 ori](https://user-images.githubusercontent.com/93992063/166719564-dc9baa53-656c-4234-a666-12f180ca4af3.png)
+![1 ori(](https://user-images.githubusercontent.com/93992063/166719752-5a370928-fed2-4744-96b2-e6f75f71aaed.png)
+## Feature encoding using Binary Encoder
+![1 bin](https://user-images.githubusercontent.com/93992063/166720022-d841f3f7-f23f-4540-84be-33619b86d7ff.png)
+![1 bin(](https://user-images.githubusercontent.com/93992063/166720183-5e234f23-1fb2-470b-bd8a-ae12dcbb1b96.png)
 
-![3](https://user-images.githubusercontent.com/93427345/195566342-41b7d1aa-3f02-4a09-b7f5-0f8090d95307.png)
+## Feature encoding using One Hot Encoder
+![1 onehot](https://user-images.githubusercontent.com/93992063/166720383-aa50fbe0-1cc0-41fd-a2a7-03ab58311e83.png)
 
-![4](https://user-images.githubusercontent.com/93427345/195566391-97a65d56-1b68-4987-84da-1219ae2d7fe6.png)
+## Feature encoding using Target Encoder
+![1 tar](https://user-images.githubusercontent.com/93992063/166720529-b4a85e7a-8732-4248-9a88-d1e715a78a20.png)
 
-![5](https://user-images.githubusercontent.com/93427345/195566408-09b6f6ed-3602-4d48-a1c7-80fe700d48d3.png)
+## Feature encoding using Label Encoder
+![1 last](https://user-images.githubusercontent.com/93992063/166720708-61c8afea-768e-41d9-82fc-0af3b58a493d.png)
 
-![6](https://user-images.githubusercontent.com/93427345/195566431-a7ff06b8-be86-4e3d-b149-2e346e6d3414.png)
+## Feature scaling using Standard Scaler
+![1 stand](https://user-images.githubusercontent.com/93992063/166720867-3074ad4c-7272-4ea0-9bc7-41c4e7e95cd0.png)
 
-![7](https://user-images.githubusercontent.com/93427345/195566454-eba9e5d5-ab32-45f4-9d7e-64e4df520512.png)
+## Feature scaling using Robust Scaler
+![1 rob](https://user-images.githubusercontent.com/93992063/166721234-6fdd3be4-3a8a-4441-9cc7-a62f5fe9f23b.png)
 
-### Tiatanic.csv Code:
+## Feature scaling using MaxAbs Scaler
+![1 max](https://user-images.githubusercontent.com/93992063/166721264-19cf4da1-8ccc-4914-87f8-1604c9b4b9b0.png)
+
+## Feature scaling using MinMax Scaler
+![1 min](https://user-images.githubusercontent.com/93992063/166721297-48b20bb1-803f-4d19-bf6e-a07691deec09.png)
+
+# 2.FEATURE GENERATION FOR Encoding.csv
+## CODE FOR FEATURE ENCODING AND FEATURE SCALING:
+```
+import pandas as pd
+
+df=pd.read_csv("Encoding Data.csv")
+df
+from sklearn.preprocessing import LabelEncoder,OrdinalEncoder
+temp=["Cold","Warm","Hot"]
+enc=OrdinalEncoder(categories=[temp])
+df["ord_2"]=enc.fit_transform(df[["ord_2"]])
+df
+from category_encoders import BinaryEncoder
+be=BinaryEncoder()
+df['bin_1']=be.fit_transform(df[['bin_1']])
+df
+be1=BinaryEncoder()
+df['bin_2']=be1.fit_transform(df[['bin_2']])
+df
+from sklearn.preprocessing import OneHotEncoder
+ohe=OneHotEncoder(sparse=False)
+ohe.fit_transform(df[["nom_0"]])
+le=LabelEncoder()
+df["nom_0"]=le.fit_transform(df[["nom_0"]])
+df
+
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+df1=pd.DataFrame(sc.fit_transform(df),columns=['id','bin_1','bin_2','nom_0','Ord_2'])
+df1
+
+from sklearn.preprocessing import MinMaxScaler
+mms=MinMaxScaler()
+df2=pd.DataFrame(mms.fit_transform(df),columns=['id','bin_1','bin_2','nom_0','Ord_2'])
+df2
+
+from sklearn.preprocessing import MaxAbsScaler mas=MaxAbsScaler()
+df3=pd.DataFrame(mas.fit_transform(df),columns=['id','bin_1','bin_2','nom_0','Ord_2'])
+df3
+
+from sklearn.preprocessing import RobustScaler
+rs=RobustScaler()
+df4=pd.DataFrame(rs.fit_transform(df),columns=['id','bin_1','bin_2','nom_0','Ord_2'])
+df4
+```
+# OUTPUT
+## Given DataFrame
+![2 give](https://user-images.githubusercontent.com/93992063/166725050-c888dd47-1095-4dcb-bc57-bb576a1a054d.png)
+
+## Feature encoding using Ordinal Encoder
+![2 ori](https://user-images.githubusercontent.com/93992063/166725173-657f006a-bb08-4a10-98fc-ebcddcaef440.png)
+
+## Feature encoding using Binary Encoder
+![2 bin](https://user-images.githubusercontent.com/93992063/166725300-f2ab5620-c2cb-4c97-a30b-683f61b2b325.png)
+
+## Feature encoding using One Hot Encoder
+![2 oneshot](https://user-images.githubusercontent.com/93992063/166725927-62709ef8-e22f-4666-b8bf-cf0be6931af7.png)
+
+## Feature scaling using Standard Scaler
+![2 stand](https://user-images.githubusercontent.com/93992063/166726434-a6ced112-ebfa-4602-ba4d-f09c8204d92e.png)
+
+## Feature scaling using Robust Scaler
+![2 rob](https://user-images.githubusercontent.com/93992063/166726654-a9f9b879-d54a-4c4f-a0bc-8425aa7f8235.png)
+
+## Feature scaling using MaxAbs Scaler
+![2 max](https://user-images.githubusercontent.com/93992063/166726680-7e8871dd-1f5b-4702-bef3-1c64ed909b59.png)
+
+## Feature scaling using MinMax Scaler
+![2 min](https://user-images.githubusercontent.com/93992063/166726706-871f0ca9-14a8-4cb4-988c-1e7f779230e4.png)
+
+# 3.FEATURE GENERATION FOR titanic_dataset.csv
+## CODE FOR FEATURE ENCODING AND FEATURE SCALING:
 ```
 import pandas as pd
 df=pd.read_csv("titanic_dataset.csv")
 df
-
-#removing unwanted data
-df.drop("Name",axis=1,inplace=True)
-df.drop("Ticket",axis=1,inplace=True)
-df.drop("Cabin",axis=1,inplace=True)
-
-#data cleaning
 df.isnull().sum()
-
 df["Age"]=df["Age"].fillna(df["Age"].median())
 df["Embarked"]=df["Embarked"].fillna(df["Embarked"].mode()[0])
-
-df.isnull().sum()
-
 df
-
-#feature encoding
+df.drop("Cabin",axis=1,inplace=True)
+df.drop("Ticket",axis=1,inplace=True)
+df.drop("Name",axis=1,inplace=True)
+df.isnull().sum()
+df
+from sklearn.preprocessing import LabelEncoder,OrdinalEncoder
+embark=["C","S","Q"]
+emb=OrdinalEncoder(categories=[embark])
+df["Embarked"]=emb.fit_transform(df[["Embarked"]])
+df
 from category_encoders import BinaryEncoder
 be=BinaryEncoder()
 df["Sex"]=be.fit_transform(df[["Sex"]])
-ndf=be.fit_transform(df["Sex"])
-ndf
-
-df1=df.copy()
-from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
-embark=['S','C','Q']
-e1=OrdinalEncoder(categories=[embark])
-df1['Embarked'] = e1.fit_transform(df[['Embarked']])
-df1
-
-#feature scaling
-from sklearn.preprocessing import MinMaxScaler
-sc=MinMaxScaler()
-df2=pd.DataFrame(sc.fit_transform(df1),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked'])
-df2
+df
 
 from sklearn.preprocessing import StandardScaler
-sc1=StandardScaler()
-df3=pd.DataFrame(sc1.fit_transform(df1),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked'])
-df3
+ss=StandardScaler()
+df1=pd.DataFrame(ss.fit_transform(df),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked','PClass'])
+df1
+
+from sklearn.preprocessing import MinMaxScaler
+mms=MinMaxScaler()
+df2=pd.DataFrame(mms.fit_transform(df),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked','PClass'])
+df2
 
 from sklearn.preprocessing import MaxAbsScaler
-sc2=MaxAbsScaler()
-df4=pd.DataFrame(sc2.fit_transform(df1),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked'])
-df4
+mas=MaxAbsScaler()
+df3=pd.DataFrame(mas.fit_transform(df),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked','PClass'])
+df3
 
 from sklearn.preprocessing import RobustScaler
-sc3=RobustScaler()
-df5=pd.DataFrame(sc3.fit_transform(df1),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked'])
-df5
+rs = RobustScaler()
+df4=pd.DataFrame(rs.fit_transform(df),columns=['Passenger','Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked','PClass'])
+df4
 ```
-### Titanic.csv Output:
-![1a](https://user-images.githubusercontent.com/93427345/195567108-7c830b0b-8d7f-455c-9292-294b346d951c.png)
+# OUTPUT
+## Given DataFrame
+![3 give](https://user-images.githubusercontent.com/93992063/166727067-24cde20a-c113-4c23-857e-97aafe8c189f.png)
 
-![1b](https://user-images.githubusercontent.com/93427345/195567142-498ffc60-f608-4bc3-bf4a-87c23cc4612a.png)
+## Resolving null value data
+![3 null](https://user-images.githubusercontent.com/93992063/166727115-dae8beac-d1a4-4820-95f5-86ee0876e997.png)
+## Dropping unnecessary columns
+![3 rr](https://user-images.githubusercontent.com/93992063/166727163-aa48c26f-2e5a-47b8-8891-098baf71e92a.png)
 
-![1c](https://user-images.githubusercontent.com/93427345/195567161-9326f2d7-037b-4c62-8056-ad66d3077cde.png)
+## Feature encoding using Ordinal Encoder
+![3 ori](https://user-images.githubusercontent.com/93992063/166727663-28c2d69f-3caa-4d9d-a47d-f0ca93ec7eb8.png)
 
-![1d](https://user-images.githubusercontent.com/93427345/195567187-fcd7fe38-43d3-4cb2-ae13-73b83652dde3.png)
+## Feature encoding using Binary Encoder
+![3 bin](https://user-images.githubusercontent.com/93992063/166727700-10b9c5bf-6ce8-449b-ba84-1233effacfea.png)
 
-![1e](https://user-images.githubusercontent.com/93427345/195567212-496db46c-f5d5-4f9e-b015-1663e51300ff.png)
+## Feature scaling using Standard Scaler
+![3 stand](https://user-images.githubusercontent.com/93992063/166727799-cec61d91-67b3-41ae-b0e8-888a00e9ef05.png)
 
-![1f](https://user-images.githubusercontent.com/93427345/195567233-5aeedabd-921a-4308-9ac1-e1a53eee0cd2.png)
+## Feature scaling using Robust Scaler
+![3 rob](https://user-images.githubusercontent.com/93992063/166727839-b57ed25b-ccfa-47c7-99fe-eac659753e29.png)
 
-![1g](https://user-images.githubusercontent.com/93427345/195567273-d540d2bf-7596-4393-bded-77eb264ed080.png)
+## Feature scaling using MaxAbs Scaler
+![3 max](https://user-images.githubusercontent.com/93992063/166727890-bbcc31f5-a0eb-47eb-a237-28b5d7cd97e9.png)
 
-![1h](https://user-images.githubusercontent.com/93427345/195567305-e868e965-3c58-4ed4-ad65-152c74608a2a.png)
+## Feature scaling using MinMax Scaler
+![3 min](https://user-images.githubusercontent.com/93992063/166727936-24639817-1c3d-43eb-ab1b-be1450241d46.png)
 
-## RESULT:
-Hence Feature Generation process and Feature Scaling process is applied to the given data frames sucessfully.
+# RESULT:
+Feature Encoding process and Feature Scaling process is applied to the given data frame sucessfully.
