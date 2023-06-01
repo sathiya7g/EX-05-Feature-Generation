@@ -4,6 +4,11 @@
 NAME Sathiya Narayanan G
 REGISTER NO 212221220049
 
+Date :
+
+GitHub :https://github.com/sathiya7g/EX-05-Feature-Generation
+
+Colab Link :https://colab.research.google.com/drive/1tagerhTIhMoSypSANmLM7VjQoYvYz7b7?usp=sharing
 
 ## AIM
 To read the given data and perform Feature Generation process and save the data to a file. 
